@@ -1,7 +1,44 @@
+<?php
+include "db_connection.php";
+$login_err = "";
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+	session_start();
+	$username = $_POST['email'];
+	$password = $_POST['password'];
+
+	$sql = "SELECT * FROM $database.Users WHERE email = '$username' and password = '$password'";
+	$connection = mysqli_connect($db_hostname, $db_username, $db_password);
+	if(!$connection) {
+		echo "Database Connection Error...".mysqli_connect_error();
+	} else {
+		$user = mysqli_query( $connection, $sql );
+		if(! $user ) {
+			echo "Error access in table Users ".mysqli_error($connection);
+		}
+		$count = mysqli_num_rows($user);
+		
+		if($count == 1 ) {
+			$user_id = 0;
+			while($row = mysqli_fetch_assoc($user)) {
+				$user_id = $row["id"];
+			}
+			
+			$_SESSION['tw_id'] = $user_id;
+			// Redirect to Home page
+			header("location: http://localhost/TW_Proiect");
+			
+		} else {
+			$login_err = "The username or password is not correct!";
+		}
+		if (!$connection)
+			mysqli_close($connection);
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html  >
 <head>
-
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="generator" content="Mobirise v5.2.0, mobirise.com">
@@ -54,7 +91,7 @@
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">Femei</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="femeiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="femeicosmetice.html">Cosmetice</a></div></li>
                     <li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">
                             Barbati</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="barbatiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="barbatiincaltaminte.html">Incaltaminte</a></div></li>
-                    <li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cont.php"><span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>Cont</a>
+                    <li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cont.html"><span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>Cont</a>
                     </li><li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cos.html"><span class="mobi-mbri mobi-mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Cos</a></li></ul>
                 <div class="icons-menu">
                     <a class="iconfont-wrapper" href="https://facebook.com" target="_blank">
@@ -80,25 +117,28 @@
             
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-                <form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler mx-auto" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="CXdwvSLQD/vbxtG6jBUC7SIa0pMjl1Wuq7LgEm2WGGBQQQIbwSYiquG9/FBRZ26YSq6WarplbE3G6yBNh3LVh8oBqO3JN+7nz4vQs6n30ZE+T3t9+RMi6LuGQh1UtKDm">
+            <div class="col-lg-8 mx-auto mbr-form" >
+                <form action="" method="POST" class="mbr-form form-with-styler mx-auto" >
+                    <input type="hidden" name="email" value="CXdwvSLQD/vbxtG6jBUC7SIa0pMjl1Wuq7LgEm2WGGBQQQIbwSYiquG9/FBRZ26YSq6WarplbE3G6yBNh3LVh8oBqO3JN+7nz4vQs6n30ZE+T3t9+RMi6LuGQh1UtKDm">
                     <div class="">
-                        <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling
+                        <div hidden="hidden"  class="alert alert-success col-12">Thanks for filling
                             out the form!</div>
-                        <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some
+                        <div hidden="hidden"  class="alert alert-danger col-12">Oops...! some
                             problem!</div>
                     </div>
                     <div class="dragArea row">
                         
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="email">
-                            <input type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form6-i">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" >
+                            <input type="email" name="email" placeholder="Email"  class="form-control" value="" >
                         </div>
-                        <div data-for="phone" class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <input type="tel" name="phone" placeholder="Phone" data-form-field="phone" class="form-control" value="" id="phone-form6-i">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <input type="password" name="password" placeholder="Password"  class="form-control" value="" >
                         </div>
                         <div class="col-auto mbr-section-btn align-center"><button type="submit" class="btn btn-primary display-4">Login</button></div>
                     </div>
                 </form>
+                <br>
+                <p class="text-center text-muted small">Don't have an account? <a href="http://localhost/TW_Proiect/register.php">Sign up here!</a></p>
             </div>
         </div>
     </div>

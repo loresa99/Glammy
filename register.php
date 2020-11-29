@@ -1,7 +1,57 @@
+<?php
+
+    include "db_connection.php";
+    
+	$register_err = "";
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		session_start();
+		$first_name = $_POST['First_Name'];
+		$last_name = $_POST['Last_Name'];
+		$password = $_POST['Password'];
+		$email= $_POST['Email'];
+		//$role= "Operator";
+        echo"bb";
+		$connection = mysqli_connect($db_hostname, $db_username, $db_password);
+		if(!$connection) {
+			echo"Database Connection Error...".mysqli_connect_error();
+		} else {
+			/*$sql = "SELECT * FROM $database.Users";
+			$retval = mysqli_query($connection, $sql);
+			if($retval){
+				if(mysqli_num_rows($retval) == 0){
+					//nu exista user inregistrat in BD
+					//primul user va fi mereu admin
+					$role = 'Admin';
+				}
+			}*/
+
+			$sql= "SELECT * FROM $database.Users WHERE email= '$email'";
+			$retval= mysqli_query($connection, $sql);
+			if(! $retval ) {
+				echo"Error access in table Users ".mysqli_error($connection);
+			}
+			
+			if (mysqli_num_rows($retval) == 0) {
+				$sql= "INSERT INTO $database.Users (first_name,last_name,email,password) ".
+				"VALUES ('$first_name','$last_name','$email','$password')";
+				$retval= mysqli_query($connection, $sql);
+				if(!$retval ) {
+					echo "Error access in table Users ".mysqli_error($connection);
+				} else {
+					header("location: http://localhost/TW_Proiect/cont.php");
+					
+				}
+			} else {
+				$register_err = "User already exists";
+			}
+		}
+		mysqli_close($connection);
+	}
+?>
+
 <!DOCTYPE html>
 <html  >
 <head>
-
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="generator" content="Mobirise v5.2.0, mobirise.com">
@@ -54,7 +104,7 @@
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">Femei</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="femeiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="femeicosmetice.html">Cosmetice</a></div></li>
                     <li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">
                             Barbati</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="barbatiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="barbatiincaltaminte.html">Incaltaminte</a></div></li>
-                    <li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cont.php"><span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>Cont</a>
+                    <li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cont.html"><span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>Cont</a>
                     </li><li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cos.html"><span class="mobi-mbri mobi-mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Cos</a></li></ul>
                 <div class="icons-menu">
                     <a class="iconfont-wrapper" href="https://facebook.com" target="_blank">
@@ -76,27 +126,33 @@
     <div class="container">
         <div class="mbr-section-head">
             <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <strong>Login</strong></h3>
+                <strong>Register</strong></h3>
             
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-                <form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler mx-auto" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="CXdwvSLQD/vbxtG6jBUC7SIa0pMjl1Wuq7LgEm2WGGBQQQIbwSYiquG9/FBRZ26YSq6WarplbE3G6yBNh3LVh8oBqO3JN+7nz4vQs6n30ZE+T3t9+RMi6LuGQh1UtKDm">
+            <div class="col-lg-8 mx-auto mbr-form" >
+                <form action="" method="POST" class="mbr-form form-with-styler mx-auto"  novalidate>
+                    <input type="hidden" name="email"  value="CXdwvSLQD/vbxtG6jBUC7SIa0pMjl1Wuq7LgEm2WGGBQQQIbwSYiquG9/FBRZ26YSq6WarplbE3G6yBNh3LVh8oBqO3JN+7nz4vQs6n30ZE+T3t9+RMi6LuGQh1UtKDm">
                     <div class="">
-                        <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling
+                        <div hidden="hidden"  class="alert alert-success col-12">Thanks for filling
                             out the form!</div>
-                        <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some
+                        <div hidden="hidden" class="alert alert-danger col-12">Oops...! some
                             problem!</div>
                     </div>
                     <div class="dragArea row">
-                        
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="email">
-                            <input type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form6-i">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" >
+                            <input type="text" name="First_Name" placeholder="First Name"  class="form-control" value="" >
                         </div>
-                        <div data-for="phone" class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <input type="tel" name="phone" placeholder="Phone" data-form-field="phone" class="form-control" value="" id="phone-form6-i">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" >
+                            <input type="text" name="Last_Name" placeholder="Last Name" class="form-control" value="" >
                         </div>
-                        <div class="col-auto mbr-section-btn align-center"><button type="submit" class="btn btn-primary display-4">Login</button></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" >
+                            <input type="email" name="Email" placeholder="Email"  class="form-control" value="" >
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <input type="password" name="Password" placeholder="Password"  class="form-control" value="" >
+                        </div>
+                        <div class="col-auto mbr-section-btn align-center"><button type="submit" class="btn btn-primary display-4">Register</button></div>
                     </div>
                 </form>
             </div>
