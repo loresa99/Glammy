@@ -92,7 +92,20 @@
 			if(! $retval ) {
 				echo"Could not create table Products".mysqli_error($connection);
 			}
+
+			$sql = "CREATE Table IF NOT EXISTS $database.Cos (".
+				"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,".
+				"user_id INT NOT NULL,".
+				"name VARCHAR(30) NOT NULL,".
+				"pret INT NOT NULL,".
+				"descriere VARCHAR(200) NOT NULL)";
+			$retval = mysqli_query( $connection, $sql );
+			if(! $retval ) {
+				echo"Could not create table Cos".mysqli_error($connection);
+			}
 		}
+
+
 
 		mysqli_close($connection);
 	}

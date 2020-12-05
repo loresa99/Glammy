@@ -1,3 +1,11 @@
+<?php
+    include "db_connection.php";
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $a="ok";
+        $usersJSON = json_encode($a);
+        echo $usersJSON;
+    }   
+?>
 <!DOCTYPE html>
 <html  >
 <head>
@@ -22,14 +30,21 @@
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
   
   <script>
-    function cumpara(){
-        const Http = new XMLHttpRequest();
-      const url='http://localhost/TW_Proiect/cumpara.php';
-      Http.open("GET", url); //get la server
-      Http.send();
+    function cumpara(id){
+        let titlu = document.getElementById("Titlu" + id).innerText;
+        let pret = document.getElementById("Pret" + id).innerText;
+        //console.log(pret);
+        let descriere = document.getElementById("Descriere" +id).innerText;
+
+    const Http = new XMLHttpRequest();
+      const url='http://localhost/TW_Proiect/barbatiaccesorii.php';
+      Http.open("POST", url); //get la server
+      Http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      Http.send(JSON.stringify({"titlu":titlu, "pret":pret, "descriere":descriere}));
       //asculta daca trm ceva inapoi
       Http.onreadystatechange = (e) => {
         if(Http.readyState === 4 && Http.status === 200) {
+            console.log(Http.responseText);
         }
       }
     }
@@ -95,21 +110,21 @@
                         <div class="image-wrapper">
                             <img src="assets/images/ceas.jpg" alt="Ceas" title="">
                         </div>
-                        <button type="button" onclick="cumpara()" class="btn btn-outline-dark">Cumpara</button>
+                        <button type="button" onclick="cumpara(1)" class="btn btn-outline-dark">Cumpara</button>
                     </div>
                     <div class="col-12 col-md">
                         <div class="card-box">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="top-line">
-                                        <h4 class="card-title mbr-fonts-style display-5"><strong>Ceas Z&Z</strong></h4>
+                                        <h4 class="card-title mbr-fonts-style display-5" id="Titlu1"><strong>Ceas Z&Z</strong></h4>
                                         <p class="cost mbr-fonts-style display-5">
-                                            $100</p>
+                                            <span>$</span><span id= "Pret1">100</span></p>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="bottom-line">
-                                        <p class="mbr-text mbr-fonts-style m-0 display-7">Ceas de mana barbati<br>
+                                        <p class="mbr-text mbr-fonts-style m-0 display-7" id="Descriere1">Ceas de mana barbati<br>
 					<br>
 					Stil: Elegant
 					<br>
@@ -137,21 +152,21 @@
                         <div class="image-wrapper">
                             <img src="assets/images/curea.jpg" alt="Curea" title="">
                         </div>
-                        <button type="button" onclick="cumpara()" class="btn btn-outline-dark">Cumpara</button>
+                        <button type="button" onclick="cumpara(2)" class="btn btn-outline-dark">Cumpara</button>
                     </div>
                     <div class="col-12 col-md">
                         <div class="card-box">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="top-line">
-                                        <h4 class="card-title mbr-fonts-style display-5"><strong>Curea</strong></h4>
+                                        <h4 class="card-title mbr-fonts-style display-5" id="Titlu2"><strong>Curea</strong></h4>
                                         <p class="cost mbr-fonts-style display-5">
-                                            $49.99</p>
+                                            <span>$</span><span id="Pret2">49.99</span></p>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="bottom-line">
-                                        <p class="mbr-text mbr-fonts-style m-0 display-7">
+                                        <p class="mbr-text mbr-fonts-style m-0 display-7" id="Descriere2">
                                             Curea de piele barbati
 					</p>
                                     </div>
@@ -169,21 +184,21 @@
                         <div class="image-wrapper">
                             <img src="assets/images/portofel.jpg" alt="Portofel" title="">
                         </div>
-                        <button type="button" onclick="cumpara()" class="btn btn-outline-dark">Cumpara</button>
+                        <button type="button" onclick="cumpara(3)" class="btn btn-outline-dark">Cumpara</button>
                     </div>
                     <div class="col-12 col-md">
                         <div class="card-box">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="top-line">
-                                        <h4 class="card-title mbr-fonts-style display-5"><strong>Portofel</strong></h4>
+                                        <h4 class="card-title mbr-fonts-style display-5" id="Titlu3"><strong>Portofel</strong></h4>
                                         <p class="cost mbr-fonts-style display-5">
-                                            $49.89</p>
+                                            <span>$</span><span id="Pret3">49.89</span></p>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="bottom-line">
-                                        <p class="mbr-text mbr-fonts-style m-0 display-7">
+                                        <p class="mbr-text mbr-fonts-style m-0 display-7" id="Descriere3">
                                             Material: Piele
 					</p>
                                     </div>

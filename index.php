@@ -43,7 +43,7 @@
                     <a href="index.html">
 			<a href="femeiaccesorii.html">
 			<a href="femeicosmetice.html">
-			<a href="barbatiaccesorii.html">
+			<a href="barbatiaccesorii.php">
 			<a href="barbatiincaltaminte.html">
 			<a href="cont.php">
 			<a href="cos.html">
@@ -64,7 +64,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">Femei</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="femeiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="femeicosmetice.html">Cosmetice</a></div></li>
                     <li class="nav-item dropdown"><a class="nav-link link text-black dropdown-toggle display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="false">
-                            Barbati</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="barbatiaccesorii.html">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="barbatiincaltaminte.html">Incaltaminte</a></div></li>
+                            Barbati</a><div class="dropdown-menu"><a class="text-black dropdown-item text-primary display-4" href="barbatiaccesorii.php">Accesorii</a><a class="text-black dropdown-item text-primary display-4" href="barbatiincaltaminte.html">Incaltaminte</a></div></li>
                     <li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cont.php"><span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>Cont</a>
                     </li><li class="nav-item"><a class="nav-link link text-black text-primary display-4" href="cos.html"><span class="mobi-mbri mobi-mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>Cos</a></li></ul>
                 <div class="icons-menu">
